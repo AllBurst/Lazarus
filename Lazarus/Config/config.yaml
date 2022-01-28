@@ -1,8 +1,0 @@
-token: "ODUxODQzNDQ5ODc4ODcyMDgz.YL-LCA.ud1t5Jpv1WxeT60G1py8adiHpwc"
-dialogEndpoint: "https://tetsukizone.com/api/dialog"
-authEndpoint: "https://tetsukizone.com/api/login"
-username: "bot"
-password: "kf0TmiW2ABxfm89QLxyAlXCa1opDzt"
-testGuilds:
-  - "705036924330704968"
-  - "695202095401533450"
