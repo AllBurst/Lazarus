@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include=".dockerignore" />
+      <Content Include="Dockerfile" />
+      <Compile Include="Models\Config.fs" />
+      <Compile Include="Handlers\ReadyResponder.fs" />
+      <Compile Include="Program.fs" />
+      <Content Include="Config\config.yaml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Chiron" Version="7.0.0-beta-180105" />
+      <PackageReference Include="Flurl" Version="3.0.2" />
+      <PackageReference Include="Flurl.Http" Version="3.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.2-mauipre.1.22054.8" />
+      <PackageReference Include="OneOf" Version="3.0.205" />
+      <PackageReference Include="Remora.Discord.Commands" Version="19.0.1" />
+      <PackageReference Include="Remora.Discord.Extensions" Version="2.0.0" />
+      <PackageReference Include="Remora.Discord.Hosting" Version="4.0.9" />
+      <PackageReference Include="Remora.Discord.Interactivity" Version="1.0.3" />
+      <PackageReference Include="Remora.Discord.Pagination" Version="1.0.4" />
+      <PackageReference Include="Remora.Discord.Rest" Version="27.1.0" />
+      <PackageReference Include="YamlDotNet" Version="11.2.1" />
+    </ItemGroup>
+
+</Project>
