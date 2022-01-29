@@ -9,5 +9,11 @@ type ReadyResponder(logger: ILogger<ReadyResponder>) =
     interface IResponder<IReady> with
         member this.RespondAsync(gatewayEvent, ct) =
             logger.LogInformation("Successfully connected to the gateway")
-            logger.LogInformation("{Name}#{Discriminator} is now online", gatewayEvent.User.Username, gatewayEvent.User.Discriminator)
+
+            logger.LogInformation(
+                "{Name}#{Discriminator} is now online",
+                gatewayEvent.User.Username,
+                gatewayEvent.User.Discriminator
+            )
+
             Task.FromResult(Remora.Results.Result.FromSuccess())

@@ -2,39 +2,38 @@ namespace Lazarus.Models
 
 open System.IO
 open YamlDotNet.Serialization
-open YamlDotNet.Serialization.NamingConventions
 
-type Config = {
-    Token: string
-    DialogEndpoint: string
-    AuthEndpoint: string
-    Username: string
-    Password: string
-    TestGuilds: string[]
-}
+type Config() =
+    member val Token = "" with get, set
+    member val DialogEndpoint = "" with get, set
+    member val AuthEndpoint = "" with get, set
+    member val Username = "" with get, set
+    member val Password = "" with get, set
+    member val TestGuilds: string[] = [||] with get, set
 
-module Configuration =
-    let private ConfigDirectoryName = "Config"
-    
-    let private ConfigFilePath = ConfigDirectoryName + "/config.yaml"
-    
-    let private ConfigDeserializer = DeserializerBuilder()
-                                         .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                                         .Build()
-                                         
-    let private EmptyConfig = { Config.Token = ""; Config.Password = ""; Config.Username = ""; Config.AuthEndpoint = ""; Config.DialogEndpoint = "" }
-    
-    let LoadConfig () =
-        if not (Directory.Exists ConfigDirectoryName) then
-            Directory.CreateDirectory(ConfigDirectoryName) |> ignore
+    static member ConfigDirectoryName = "Config"
+
+    static member ConfigFilePath =
+        Config.ConfigDirectoryName + "/config.yaml"
+
+    static member ConfigDeserializer =
+        DeserializerBuilder()
+            .WithNamingConvention(NamingConventions.CamelCaseNamingConvention.Instance)
+            .Build()
+
+    static member LoadConfig() =
+        if not (Directory.Exists Config.ConfigDirectoryName) then
+            Directory.CreateDirectory(Config.ConfigDirectoryName)
+            |> ignore
         else
             ()
+
         try
-            if (File.Exists ConfigFilePath) then
-                ConfigDeserializer.Deserialize<Config>(File.ReadAllText ConfigFilePath)
+            if (File.Exists Config.ConfigFilePath) then
+                Config.ConfigDeserializer.Deserialize<Config>(File.ReadAllText Config.ConfigFilePath)
             else
-                EmptyConfig
+                Config()
         with
         | ex ->
             eprintfn $"{ex}"
-            EmptyConfig
+            Config()
