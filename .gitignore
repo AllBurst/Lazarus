@@ -7,3 +7,5 @@ riderModule.iml
 .ionide
 /.idea/
 Lazarus/Config/
+.DS_Store
+**/*/.DS_Store

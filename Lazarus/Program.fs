@@ -2,9 +2,11 @@ open System
 open System.Threading
 open System.Threading.Tasks
 open Flurl.Http
+open Lazarus.Extensions.RegisterCommands
 open Lazarus.Handlers
 open Lazarus.Models
 open Lazarus.Models.Dialog
+open Lazarus.Services
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
@@ -40,8 +42,9 @@ let private createHostBuilder args (state: State) =
             services
                 .AddDiscordCommands(true)
                 .AddInteractivity()
-                .AddSingleton(state.Config)
+                .AddSingleton(state)
                 .AddResponder<ReadyResponder>()
+                .RegisterCommands()
                 .Configure<DiscordGatewayClientOptions>(fun (opt: DiscordGatewayClientOptions) ->
                     let intents =
                         GatewayIntents.Guilds
@@ -72,12 +75,14 @@ let private getDialogOptions (config: Config) =
     }
 
 let config = Config.LoadConfig()
-let getDialogOptionsTask = task { return! getDialogOptions config }
-getDialogOptionsTask.Wait()
+let getDialogOptionsTask = getDialogOptions config
+let authentication = Authentication(config.Username, config.Password, config.AuthEndpoint)
+authentication.Login().GetAwaiter().GetResult()
 
 let state =
     { State.Config = config
-      State.DialogOptions = getDialogOptionsTask.Result }
+      State.DialogOptions = getDialogOptionsTask.GetAwaiter().GetResult()
+      State.Authentication = authentication }
 
 let shutdownTokenSource = new CancellationTokenSource()
 
