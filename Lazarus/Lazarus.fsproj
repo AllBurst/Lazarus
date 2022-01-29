@@ -19,9 +19,6 @@
       <Compile Include="Commands\Ping.fs" />
       <Compile Include="Extensions\RegisterCommands.fs" />
       <Compile Include="Program.fs" />
-      <Content Include="Config\config.yaml">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 
     <ItemGroup>
