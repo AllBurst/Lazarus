@@ -79,10 +79,13 @@ let getDialogOptionsTask = getDialogOptions config
 let authentication = Authentication(config.Username, config.Password, config.AuthEndpoint)
 authentication.Login().GetAwaiter().GetResult()
 
+let amqpService = new AmqpService(config)
+
 let state =
     { State.Config = config
       State.DialogOptions = getDialogOptionsTask.GetAwaiter().GetResult()
-      State.Authentication = authentication }
+      State.Authentication = authentication
+      State.AmqpService = amqpService }
 
 let shutdownTokenSource = new CancellationTokenSource()
 

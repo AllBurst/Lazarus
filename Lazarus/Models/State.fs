@@ -8,4 +8,5 @@ type State = {
     Config: Config
     DialogOptions: DialogOptions
     Authentication: Authentication
+    AmqpService: AmqpService
 }
