@@ -10,9 +10,7 @@ type Config() =
     member val Username = "" with get, set
     member val Password = "" with get, set
     member val TestGuilds: string[] = [||] with get, set
-    member val RabbitMqEndpoint = "" with get, set
-    member val RabbitMqUsername = "" with get, set
-    member val RabbitMqPassword = "" with get, set
+    member val Rabbit = RabbitMqConfig() with get, set
 
     static member ConfigDirectoryName = "Config"
 

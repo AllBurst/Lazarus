@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <Compile Include="Utilities\Constants.fs" />
+      <Compile Include="Models\RabbitMqConfig.fs" />
       <Compile Include="Models\Config.fs" />
       <Compile Include="Models\LoginRequestData.fs" />
       <Compile Include="Models\Dialog\DialogOptions.fs" />
