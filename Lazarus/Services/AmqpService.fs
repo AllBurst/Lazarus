@@ -12,10 +12,10 @@ type AmqpService(config: Config) as x =
 
     do
         let factory = ConnectionFactory()
-        factory.HostName <- config.RabbitMqEndpoint
+        factory.HostName <- config.Rabbit.Endpoint
         factory.DispatchConsumersAsync <- true
-        factory.UserName <- config.RabbitMqUsername
-        factory.Password <- config.RabbitMqPassword
+        factory.UserName <- config.Rabbit.Username
+        factory.Password <- config.Rabbit.Password
         x.publishConnection <- factory.CreateConnection()
         x.subscribeConnection <- factory.CreateConnection()
 
