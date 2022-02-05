@@ -9,6 +9,8 @@ open RabbitMQ.Client
 type AmqpService(config: Config) as x =
     let burstGameExchangeName = "burst_game"
     let mutable disposed = false
+    let publishChannels = ConcurrentQueue<IModel>()
+    let subscribeChannels = ConcurrentQueue<IModel>()
 
     do
         let factory = ConnectionFactory()
@@ -29,8 +31,8 @@ type AmqpService(config: Config) as x =
 
         x.logger <- loggerFactory.CreateLogger<AmqpService>()
 
-        [ x.publishConnection, x.publishChannels
-          x.subscribeConnection, x.subscribeChannels ]
+        [ x.publishConnection, publishChannels
+          x.subscribeConnection, subscribeChannels ]
         |> List.iter
             (fun (conn, queue) ->
                 [ 1 .. (Environment.ProcessorCount / 2) ]
@@ -49,12 +51,6 @@ type AmqpService(config: Config) as x =
     val mutable private subscribeConnection: IConnection
 
     [<DefaultValue>]
-    val mutable private publishChannels: ConcurrentQueue<IModel>
-
-    [<DefaultValue>]
-    val mutable private subscribeChannels: ConcurrentQueue<IModel>
-
-    [<DefaultValue>]
     val mutable private logger: ILogger<AmqpService>
 
     override x.Finalize() = x.Dispose false
@@ -63,8 +59,8 @@ type AmqpService(config: Config) as x =
         if disposed then
             ()
         else if disposing then
-            [ x.publishChannels
-              x.subscribeChannels ]
+            [ publishChannels
+              subscribeChannels ]
             |> List.iter
                 (fun queue ->
                     queue
