@@ -8,6 +8,9 @@
 
     <ItemGroup>
       <Compile Include="Utilities\Constants.fs" />
+      <Compile Include="Utilities\Utilities.fs" />
+      <Compile Include="Utilities\Colors.fs" />
+      <Compile Include="Extensions\Extensions.fs" />
       <Compile Include="Models\RabbitMqConfig.fs" />
       <Compile Include="Models\Config.fs" />
       <Compile Include="Models\LoginRequestData.fs" />
@@ -17,10 +20,14 @@
       <Compile Include="Services\Authentication.fs" />
       <Compile Include="Services\AmqpService.fs" />
       <Compile Include="Models\State.fs" />
-      <Compile Include="Handlers\ReadyResponder.fs" />
       <Compile Include="Commands\Ping.fs" />
-      <Compile Include="Extensions\RegisterCommands.fs" />
+      <Compile Include="Commands\About.fs" />
+      <Compile Include="Handlers\ReadyResponder.fs" />
+      <Compile Include="Handlers\RegisterCommands.fs" />
       <Compile Include="Program.fs" />
+      <Content Include="Assets\about.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

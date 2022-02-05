@@ -1,0 +1,6 @@
+Lloyd Sirius is inspired by the visual novel Camp Buddy: Scoutmaster's Season.
+
+Lloyd Sirius version {versionNumber} is made and developed by:
+**Tetsuki Syu#1250**
+Written with:
+[Remora.Discord](https://github.com/Nihlus/Remora.Discord) and [F#](https://fsharp.org/).

@@ -2,11 +2,12 @@ open System
 open System.Threading
 open System.Threading.Tasks
 open Flurl.Http
-open Lazarus.Extensions.RegisterCommands
 open Lazarus.Handlers
+open Lazarus.Handlers.RegisterCommands
 open Lazarus.Models
 open Lazarus.Models.Dialog
 open Lazarus.Services
+open Lazarus.Utilities
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.Logging
@@ -14,7 +15,6 @@ open Remora.Discord.API
 open Remora.Discord.API.Abstractions.Gateway.Commands
 open Remora.Discord.API.Abstractions.Objects
 open Remora.Discord.API.Gateway.Commands
-open Remora.Discord.API.Objects
 open Remora.Discord.Commands.Extensions
 open Remora.Discord.Commands.Services
 open Remora.Discord.Gateway
@@ -22,17 +22,6 @@ open Remora.Discord.Gateway.Extensions
 open Remora.Discord.Hosting.Extensions
 open Remora.Discord.Interactivity.Extensions
 open Thoth.Json.Net
-
-let private activities =
-    [| "Architecting"
-       "Horoscope"
-       "Astrology"
-       "Designing"
-       "Modeling"
-       "AutoCAD"
-       "Rhinoceros 3D"
-       "3ds Max" |]
-    |> Array.map (fun s -> Activity(s, ActivityType.Game) :> IActivity)
 
 let private createHostBuilder args (state: State) =
     Host
@@ -52,7 +41,7 @@ let private createHostBuilder args (state: State) =
                         ||| GatewayIntents.GuildMessageReactions
 
                     opt.Intents <- intents
-                    opt.Presence <- UpdatePresence(ClientStatus.Online, false, Nullable(), activities))
+                    opt.Presence <- UpdatePresence(ClientStatus.Online, false, Nullable(), Constants.activities))
             |> ignore)
         .ConfigureLogging(fun builder ->
             builder
