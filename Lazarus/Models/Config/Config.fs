@@ -1,10 +1,11 @@
-namespace Lazarus.Models
+namespace Lazarus.Models.Config
 
 open System.IO
 open YamlDotNet.Serialization
 
 type Config() =
     member val Token = "" with get, set
+    member val LazarusId = uint64 0 with get, set
     member val DialogEndpoint = "" with get, set
     member val AuthEndpoint = "" with get, set
     member val Username = "" with get, set

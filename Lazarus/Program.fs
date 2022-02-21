@@ -5,6 +5,7 @@ open Flurl.Http
 open Lazarus.Handlers
 open Lazarus.Handlers.RegisterCommands
 open Lazarus.Models
+open Lazarus.Models.Config
 open Lazarus.Models.Dialog
 open Lazarus.Services
 open Lazarus.Utilities

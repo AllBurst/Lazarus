@@ -1,4 +1,4 @@
-namespace Lazarus.Models
+namespace Lazarus.Models.Authentication
 
 open System
 open Thoth.Json.Net

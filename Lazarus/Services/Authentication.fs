@@ -2,7 +2,7 @@ namespace Lazarus.Services
 
 open System
 open Flurl.Http
-open Lazarus.Models
+open Lazarus.Models.Authentication
 open Thoth.Json.Net
 
 type Authentication(username: string, password: string, authEndpoint: string) =
