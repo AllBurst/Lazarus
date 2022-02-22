@@ -35,8 +35,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Fleece.SystemTextJson" Version="0.10.0-RC14" />
       <PackageReference Include="Flurl" Version="3.0.4" />
       <PackageReference Include="Flurl.Http" Version="3.2.2" />
+      <PackageReference Include="FSharpPlus" Version="1.2.2" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.2-mauipre.1.22054.8" />
       <PackageReference Include="OneOf" Version="3.0.205" />
       <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />

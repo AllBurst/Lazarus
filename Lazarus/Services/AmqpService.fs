@@ -5,6 +5,7 @@ open System.Collections.Concurrent
 open System.Text
 open System.Threading.Channels
 open System.Threading.Tasks
+open Fleece
 open Lazarus.Models.Config
 open Lazarus.Models.Game.Serializables
 open Microsoft.Extensions.Logging
@@ -107,7 +108,7 @@ type AmqpService(config: Config) as x =
                                           else
                                             ea.RoutingKey[18..]
                             let body = ea.Body.ToArray() |> Encoding.UTF8.GetString
-                            let matchData = Decode.fromString GenericJoinStatus.decoder body
+                            let matchData: GenericJoinStatus ParseResult = Fleece.SystemTextJson.Operators.parseJson body
                             match matchData with
                             | Ok(Matched genericMatchData) ->
                                 let newPlayerIds = config.LazarusId :: genericMatchData.PlayerIds
