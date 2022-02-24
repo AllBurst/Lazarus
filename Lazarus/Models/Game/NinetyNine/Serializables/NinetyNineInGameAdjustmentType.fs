@@ -13,4 +13,4 @@ type NinetyNineInGameAdjustmentType
         | "One" -> Ok One
         | "Fourteen" -> Ok Fourteen
         | "Eleven" -> Ok Eleven
-        | x -> invalidArg x "Invalid Ninety-Nine adjustment type."
+        | x -> Fleece.Uncategorized $"Invalid adjustment type `{x}`." |> Error

@@ -17,4 +17,4 @@ type GameType
         | "OldMaid" -> Ok OldMaid
         | "RedDotsPicking" -> Ok RedDotsPicking
         | "ChaseThePig" -> Ok ChaseThePig
-        | x -> invalidArg x "Invalid game type."
+        | x -> Uncategorized $"Invalid game type {x}." |> Error

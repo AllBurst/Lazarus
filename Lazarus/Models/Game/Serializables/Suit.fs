@@ -23,4 +23,4 @@ type Suit
         | "Diamond" -> Ok Diamond
         | "Heart" -> Ok Heart
         | "Spade" -> Ok Spade
-        | x -> invalidArg x "Invalid suit."
+        | x -> Fleece.Uncategorized $"Invalid suit {x}." |> Error

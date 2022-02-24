@@ -11,7 +11,6 @@ open Lazarus.Models.Game.Serializables
 open Microsoft.Extensions.Logging
 open RabbitMQ.Client
 open RabbitMQ.Client.Events
-open Thoth.Json.Net
 
 type AmqpService(config: Config) as x =
     let burstGameExchangeName = "burst_game"
@@ -84,7 +83,7 @@ type AmqpService(config: Config) as x =
             else
                 let! matchData = responseChannel.Reader.ReadAsync()
                 let gameId = matchData.GameId
-                let body = GenericJoinStatus.Matched matchData |> GenericJoinStatus.encoder |> Encode.toString 4 |> Encoding.UTF8.GetBytes
+                let body = GenericJoinStatus.Matched matchData |> SystemTextJson.Operators.toJsonText |> Encoding.UTF8.GetBytes
                 channel.BasicPublish(burstMatchExchangeName, $"ai.match.responses.{gameId}{config.Rabbit.Suffix}", body = body)
                 publishChannels.Enqueue(channel)
             return! x.StartPublishingResponses ()
@@ -108,7 +107,7 @@ type AmqpService(config: Config) as x =
                                           else
                                             ea.RoutingKey[18..]
                             let body = ea.Body.ToArray() |> Encoding.UTF8.GetString
-                            let matchData: GenericJoinStatus ParseResult = Fleece.SystemTextJson.Operators.parseJson body
+                            let matchData = SystemTextJson.Operators.ofJsonText<GenericJoinStatus> body
                             match matchData with
                             | Ok(Matched genericMatchData) ->
                                 let newPlayerIds = config.LazarusId :: genericMatchData.PlayerIds

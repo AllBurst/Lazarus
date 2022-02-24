@@ -21,6 +21,6 @@ type NinetyNineInGameRequestPlayData =
             "game_type" .= x.GameType.ToString()
             "player_id" .= x.PlayerId
             "play_cards" .= x.PlayCards
-            "adjustments" .= (x.Adjustments >>= fun a -> List.map (fun a' -> a'.ToString()) a |> Some)
+            "adjustments" .= (x.Adjustments >>= fun a -> (fun a' -> a'.ToString()) <!> a |> Some)
             "request_type" .= "Play"
         ]

@@ -1,7 +1,6 @@
 namespace Lazarus.Models.Game.Serializables
 
 open Fleece
-open Fleece.SystemTextJson
 open FSharpPlus
 open Lazarus.Models.Game.Serializables
 open Thoth.Json.Net
@@ -11,7 +10,7 @@ type GenericJoinStatus
     with
     static member ToJson (x: GenericJoinStatus) =
         match x with
-        | Matched genericMatchData -> toJson genericMatchData
+        | Matched genericMatchData -> SystemTextJson.Operators.toJson genericMatchData
         
     static member OfJson json =
         match json with
