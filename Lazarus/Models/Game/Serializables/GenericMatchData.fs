@@ -24,13 +24,7 @@ type GenericMatchData =
     
     static member ToJson (x: GenericMatchData) =
         jobj [
-            "game_type" .= (match x.GameType with
-                            | BlackJack -> "BlackJack"
-                            | NinetyNine -> "NinetyNine"
-                            | ChinesePoker -> "ChinesePoker"
-                            | OldMaid -> "OldMaid"
-                            | RedDotsPicking -> "RedDotsPicking"
-                            | ChaseThePig -> "ChaseThePig")
+            "game_type" .= x.GameType.ToString()
             "game_id" .= x.GameId
             "player_ids" .= x.PlayerIds
             "base_bet" .= x.BaseBet
@@ -41,14 +35,7 @@ type GenericMatchData =
         match json with
         | JObject o ->
             monad {
-                let! gameType = o .@ "game_type" >>= (fun s -> match s with
-                                                                | "BlackJack" -> Ok BlackJack
-                                                                | "NinetyNine" -> Ok NinetyNine
-                                                                | "ChinesePoker" -> Ok ChinesePoker
-                                                                | "OldMaid" -> Ok OldMaid
-                                                                | "RedDotsPicking" -> Ok RedDotsPicking
-                                                                | "ChaseThePig" -> Ok ChaseThePig
-                                                                | x -> failwith $"Invalid value for GameType: {x}")
+                let! gameType = o .@ "game_type" >>= GameType.Parse
                 let! gameId = o .@ "game_id"
                 let! playerIds = o .@ "player_ids"
                 let! baseBet = o .@ "base_bet"
@@ -65,13 +52,7 @@ type GenericMatchData =
 module GenericMatchData =
     let encoder (x: GenericMatchData) =
         let jsonValue = Encode.object [
-            "game_type", (match x.GameType with
-                          | BlackJack -> "BlackJack"
-                          | NinetyNine -> "NinetyNine"
-                          | ChinesePoker -> "ChinesePoker"
-                          | OldMaid -> "OldMaid"
-                          | RedDotsPicking -> "RedDotsPicking"
-                          | ChaseThePig -> "ChaseThePig") |> Encode.string
+            "game_type", x.GameType.ToString() |> Encode.string
             "game_id", Encode.string x.GameId
             "player_ids", List.map (fun (id: uint64) -> JValue(id) :> JsonValue) x.PlayerIds |> Encode.list
             "base_bet", Encode.float32 x.BaseBet
